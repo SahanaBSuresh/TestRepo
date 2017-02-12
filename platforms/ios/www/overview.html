@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" href="css/framework7.ios.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"> </script>
+        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"> </script>
+        <script type="text/javascript" src="js/framework7.js"></script>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/overview.js"></script>
+    </head>
+    <body>
+        
+<!--        <br/><br/>
+        <a href="index.html">Back</a>
+        <br/><br/>-->
+
+        <div class="navbar" style="height:60px;background: #FF7F24;">
+                <div class="navbar-inner">
+                        <div class="left" onclick="backButtonClicked();">
+                            <a href="index.html" class="external link">
+<!--                                    <i class="icon icon-back"></i>-->
+                                    <img style="width:25px;height:25px;" src="img/BackIcon.png" />
+                                    <span style="color:white;">Back</span>
+                            </a>
+                        </div>
+                        <div class="center" id="ScreenTitle" style="color:white;"></div>
+                        <div class="right">
+            <!--                <a href="#" class="link">
+                                <i class="icon icon-bars"></i>
+                                <span>Menu</span>
+                            </a>     -->
+                        </div>
+                </div>
+        </div>
+
+<form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+    <div class="searchbar-input">
+        <input type="search" class="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+            </div><a href="#" class="searchbar-cancel">Cancel</a>
+</form>
+
+
+        <table id="overviewTable">
+        </table>
+
+    </body>
+</html>

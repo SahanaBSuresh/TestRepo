@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+<!--        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" href="css/framework7.ios.css">
+            
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--        <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css"rel="stylesheet"type="text/css" />-->
+
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6Mmqtgi3GcwX_xL1bcvfNcsg9Yendpxc"></script>
+
+
+        <title>Dashboard</title>
+    </head>
+    <body id="body">
+<!--        <div class="app">-->
+<!--            <h1>Apache Cordova</h1>-->
+<!--            <div id="deviceready" class="blink">-->
+<!--                <p class="event listening">Connecting to Device</p>-->
+<!--                <p class="event received">Device is Ready</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+    <div class="views">
+        <div class="view view-main">
+            <div class="navbar" style="height:60px;background: #FF7F24;">
+                <div class="navbar-inner">
+                    <div class="left"><img style="width:40px;height:40px;" src="img/ServiceProIcon.png" />&nbsp;<div style="color:white;">ServicePro</div></div>
+                    <div class="center"></div>
+                    <div class="right">
+                        <a href="info.html" class="item-link item-content external link">
+                        <img style="width:35px;height:35px;" src="img/Info.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+<!--        <div class="pages navbar-through">-->
+            <div data-page="grid" class="page">
+                <div class="page-content" style="margin-top:25px;">
+                    <div class="content-block">
+                    </div>
+                    <div class="ks-grid">
+<!--                        <div class="content-block-title">Columns with gutter</div>-->
+                        <div class="content-block">
+                            <div class="row">
+                                <div class="col-66 height900">
+                                    <div>
+                                        <div class="row-33 height233">
+                                            <div class="row">
+                                                <div class="col-15" style="margin-top:35px;">
+                                                    <img style="width:60px;height:60px;" src="img/NextCustomer.png" />
+                                                    <p>Next Customer</p>
+                                                </div>
+                                                <div class="col-85" style="margin-top:35px;">
+                                                    <div class="row" id="nextCustomerName" style="font-size:20px;">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-40">
+                                                            <div id="address1" align="left"></div>
+                                                            <div id="address2" align="left"></div>
+                                                            <div id="address3" align="left"></div>
+                                                        </div>
+                                                        <div class="col-60">
+                                                            <div class="row">
+                                                                <div class="col-40">
+                                                                    <div id="contactName" align="left"></div>
+                                                                </div>
+                                                                <div class="col-50">
+                                                                    <div id="telNum1" align="left"></div>
+                                                                </div>
+                                                                <div class="col-10" id="telNum1callButton" style="width:15px;height:15px;">
+<!--                                                                    <img style="width:15px;height:15px;" src="img/CallButton.png" />-->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-40">
+                                                                </div>
+                                                                <div class="col-50">
+                                                                    <div id="telNum2" align="left"></div>
+                                                                </div>
+                                                                <div class="col-10" id="telNum2callButton">
+<!--                                                                    <img style="width:15px;height:15px;" src="img/CallButton.png" />-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row" style="border: 1px solid #ddd;">
+                                        </div>
+                                        
+                                        <div class="row-33 height233">
+                                            <div class="row">
+<!--                                                <div class="col-5" style="border: 1px solid #ddd;"></div>-->
+
+                                                <div class="col-50" style="margin-top:10px;margin-bottom:10px;" onclick="totalTasksTileClicked();">
+                                                    <a href="overview.html" class="item-link item-content external link">
+                                                    <p align="left" style="font-size:15px;"><font color="black">Total Tasks</font></p>
+                                                    <div class="row" style="margin-top:35px;">
+                                                        <div class="col-30">                                                    <img style="width:60px;height:60px;" src="img/TotalTasks.png" />
+                                                        </div>
+                                                        <div class="col-70" id="totalTasksNum" style="font-size:80px;">
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                </div>
+<!--                                                <div class="col-10" style="border: 1px solid #ddd;"></div>-->
+                                                <div class="col-50" style="margin-top:10px;margin-bottom:10px;" onclick="tasksForTodayTileClicked();">
+                                                    <a href="overview.html" class="item-link item-content external link">
+                                                    <p align="left" style="font-size:15px;"><font color="black">Tasks for the day</font></p>
+                                                    <div class="row" style="margin-top:35px;">
+                                                        <div class="col-30">                                                    <img style="width:60px;height:60px;" src="img/TasksForTheDay.png" />
+                                                        </div>
+                                                        <div class="col-70" id="tasksForTheDayNum" style="font-size:80px;">
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                </div>
+<!--                                                <div class="col-5" style="border: 1px solid #ddd;"></div>-->
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-50">
+                                                <div class="row" style="border: 1px solid #ddd;"></div>
+                                            </div>
+                                            <div class="col-50">
+                                                <div class="row" style="border: 1px solid #ddd;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row-33 height233">
+                                            <div class="row">
+                                                <div class="col-20" style="margin-top:10px;">
+                                                    <img style="width:80px;height:80px;" src="img/VanStock.png" />
+                                                    <p>Van Stock</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:10px;">
+                                                    <img style="width:80px;height:80px;" src="img/Utilization.png" />
+                                                    <p>Utilization</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:10px;">
+                                                    <img style="width:80px;height:80px;" src="img/Contacts.png" />
+                                                    <p>Contacts</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:10px;">
+                                                    <img style="width:80px;height:80px;" src="img/Billable.png" />
+                                                    <p>Billable</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:10px;">
+                                                    <img style="width:80px;height:80px;" src="img/Activities.png" />
+                                                    <p>Activities</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-33 height900">
+                                    <div class="buttons-row">
+                                        <a href="#tab1" class="tab-link active button show-tab-1">Next Customer</a>
+                                        <a href="#tab2" class="tab-link button show-tab-2">Itinerary</a>
+                                    </div>
+                                    <div class="tabs">
+                                        <div id="tab1" class="tab active">
+                                            <div class="content-block">
+                                                <div id="map_canvas1" style="border: 1px solid #ddd;">
+<!--                                                    Couldn't load map because there was no internet connection available-->
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div id="tab2" class="tab">
+                                            <div class="content-block">
+                                                <div id="map_canvas2" style="border: 1px solid #ddd;">
+<!--                                                    This is tab 2 content-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--        </div>-->
+
+        </div>
+    </div>
+
+        <script type="text/javascript" src="js/framework7.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
+        
+        <script type="text/javascript" src="js/common.js"></script>
+
+        <script>
+            var myApp = new Framework7();
+            var $$ = Dom7;
+            
+            $$('.show-tab-1').on('click', function () {
+                myApp.showTab('#tab1');
+//                mapNextCustomerButtonClicked();
+            });
+            $$('.show-tab-2').on('click', function () {
+                myApp.showTab('#tab2');
+//                itineraryButtonClicked();
+            });
+            
+            
+            $$('#tab1').on('show', function () {
+//                           myApp.alert('Tab 1 is visible');
+                           mapNextCustomerButtonClicked();
+                           });
+            
+            $$('#tab2').on('show', function () {
+//                           myApp.alert('Tab 2 is visible');
+                           itineraryButtonClicked();
+                           });
+            
+            </script>
+
+
+    </body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js">
+            </script>
+        <script>
+            
+            //   var result;
+            var createDbStatement;
+            var populateDbStatement;
+            var db;
+            var ServiceOrderArray = new Array();
+
+            $(document).ready(function(){
+                              
+                              db = window.openDatabase("ServiceProDB", "1.0", "serviceProDB", 200000);
+                              //         db.transaction(populateDB, errorCB, successCB);
+                              
+                              //      $("button").click(function(){
+                              $('#callWebservice').click(function(){
+                                                         
+                                                         alert("Calling webservice");
+                                                         var webServiceURL = 'http://75.99.152.10:8050/sap/bc/srt/rfc/sap/z_gssmwfm_hndl_evntrqst00/110/z_gssmwfm_hndl_evntrqst00/z_gssmwfm_hndl_evntrqst00';
+                                                         
+                                                         var soapMessage = '<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" xmlns:v="http://schemas.xmlsoap.org/soap/envelope/"><v:Header /><v:Body><n0:ZGssmwfmHndlEvntrqst00 id="o0" c:root="1" xmlns:n0="urn:sap-com:document:sap:soap:functions:mc-style"><DpistInpt i:type="c:Array" c:arrayType="d:anyType[4]">'
+                                                         +  '<item i:type="d:anyType"><Cdata i:type="d:string">' + 	'DEVICE-ID:184E3B65F52CFE8C191B2D34F3E54EE5:DEVICE-TYPE:IOS:APPLICATION-ID:SERVICEPRO:DEVICE-ALTID:EABEBABFEBD2605401301AE2A779935B:GLTTD:0.000000:GLNGTD:0.000000:' + '</Cdata></item>'
+                                                         +  '<item i:type="d:anyType"><Cdata i:type="d:string">' + 	'NOTATION:ZML:VERSION:0:DELIMITER:[.]' + '</Cdata></item>'
+                                                         +  '<item i:type="d:anyType"><Cdata i:type="d:string">' + 	'EVENT[.]SERVICE-DOX-FOR-EMPLY-BP-GET[.]VERSION[.]0' + '</Cdata></item>'
+                                                         + '</DpistInpt></n0:ZGssmwfmHndlEvntrqst00></v:Body></v:Envelope>';
+                                                         
+                                                         $.ajax({
+                                                                url: webServiceURL,
+                                                                type: "POST",
+                                                                dataType: "xml",
+                                                                //       timeout: 10000000,
+                                                                data: soapMessage,
+                                                                contentType: "text/xml; charset=\"utf-8\"",
+                                                                complete: onComplete,
+                                                                success:function(Result, textStatus, XMLHttpRequest) {
+                                                                alert(Result);
+                                                                },
+                                                                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                                                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                                                                }
+                                                                });
+                                                         });
+                              
+                              });
+                              
+                              function onComplete(xmlHttpRequest, status)
+                              {
+                                  //    var i = 0;
+                                  
+                                  alert("Reponse text :\n"+xmlHttpRequest.responseText);
+                                  console.log("Response :\n"+xmlHttpRequest.responseText);
+                                  
+                                  $(xmlHttpRequest.responseXML)
+                                  .find('DpostOtpt').find('item')
+                                  .each(function()
+                                        {
+                                        var name = $(this).find('Cdata').text();
+                                        //     alert("name : "+name);
+                                        
+                                        var result = name.split("[.]");
+                                        //     alert("result length : "+result.length);
+                                        if (result[0] == "DATA-TYPE")
+                                        {
+                                        //         alert("result[1] : "+result[1]);
+                                        //      alert("datatype result : " + result);
+                                        
+                                        createDbStatement = "";
+                                        
+                                        //          db = window.openDatabase(result[1], "1.0", result[1], 200000);
+                                        //           var dbDisplayName = result[1]+"dB";
+                                        //           db = window.openDatabase(result[1], "1.0", dbDisplayName, 200000);
+                                        
+                                        //  alert(result);
+                                        //      db.transaction(createDB(result), errorCB, dbSuccessCB);
+                                        db.transaction(function(transaction){ createDB(transaction, result);}, errorCB, dbSuccessCB);
+                                        }
+                                        else if(result[0] == "NOTATION:ZML:VERSION:0:DELIMITER:")
+                                        {
+                                        }
+                                        else if(result[0] == "EVENT-RESPONSE")
+                                        {
+                                        }
+                                        //          else if (!result[0].statsWith("NOTATION") && !result[0].statsWith("EVENT-RESPONSE") && !result[0].statsWith("DATA-TYPE"))
+                                        else
+                                        {
+                                        //   alert("data result : " + result);
+                                        populateDbStatement = "";
+                                        //     db = window.openDatabase(result[0], "1.0", result[0], 200000);
+                                        //        db.transaction(populateDB, errorCB, successCB);
+                                        db.transaction(function(transaction){ populateDB(transaction, result);}, errorCB, successCB);
+                                        }
+                                        
+                                        });
+                                        
+                                        db.transaction(queryDB, errorCB);
+
+                              }
+        
+        
+        function createDB(tx,result) {
+            //      db.transaction(function (tx) {
+            //     alert("createDB transaction func");
+            //    alert(result);
+            //   alert(result.length);
+            //   alert("data type result[0] : " + result[0]);
+            if(result[0] == "DATA-TYPE")
+            {
+                //    alert("createdb alert");
+                tx.executeSql('DROP TABLE IF EXISTS ' + result[1]);
+                
+                var createDbStatement = "CREATE TABLE IF NOT EXISTS " + result[1] + " (";
+                for( i=3 ; i<result.length ; i++)
+                {
+                    if(i>3)
+                    createDbStatement = createDbStatement + ",";
+                    createDbStatement = createDbStatement + result[i];
+                }
+                createDbStatement = createDbStatement + ")";
+                
+          //      alert("createDbStatement : " + createDbStatement);
+                
+                tx.executeSql(createDbStatement);
+                
+                //             alert("Creation done");
+            }
+            // });
+        }
+        
+        function errorCB(err) {
+            alert("Error processing SQL: "+err.code);
+            console.log("Error processing SQL: "+err.code);
+        }
+        
+        function dbSuccessCB(err) {
+            //     alert("CreateDbStatement : " + createDbStatement);
+            //     alert(result[0] + result[1] + "DB creation Success");
+            console.log("DB creation Success");
+        }
+        
+        function populateDB(tx,result) {
+            //    db.transaction(function (tx) {
+            //            alert("populateDB transaction func");
+            
+            var populateDbStatement = "INSERT INTO " + result[0] + " VALUES " + " (";
+            for( i=1 ; i<result.length ; i++)
+            {
+                if(i>1)
+                populateDbStatement = populateDbStatement + ",";
+                
+                populateDbStatement = populateDbStatement + "'";
+                populateDbStatement = populateDbStatement + result[i];
+                populateDbStatement = populateDbStatement + "'";
+            }
+            populateDbStatement = populateDbStatement + ")";
+            
+      //      alert("populateDbStatement : " + populateDbStatement);
+            
+            tx.executeSql(populateDbStatement);
+            
+            //            alert("populating db done");
+            //           });
+        }
+        
+        // Transaction success callback
+        //
+        function successCB() {
+            //    alert("DB population success");
+            
+            db.transaction(function (tx) {
+                      //     alert("DB population transaction function");
+                           //   tx.executeSql('SELECT * FROM ?', [result[0]], function (tx, results) {
+                           tx.executeSql('SELECT * FROM ZGSXSMST_SRVCDCMNT10', [], function (tx, results) {
+                             //            alert(results.rows.length);
+                                         var len = results.rows.length;
+                                         var i;
+                                  //       msg = "Found rows: " + len + "\n";
+                                         
+                                         for (i = 0; i < len; i++){
+                                         //       msg = msg + results.rows.item(i).OBJECT_ID + "     " + results.rows.item(i).NAME_ORG1 + "\n";
+                                         }
+                                    //     alert(msg);
+                                         }, null);
+                           });
+        }
+        
+        function queryDB(tx) {
+            alert("queryDB func");
+            db.transaction(function (tx) {
+                           
+                           alert("queryDB transaction func");
+                           
+                           tx.executeSql('SELECT * FROM ZGSXSMST_SRVCDCMNT10', [], querySuccess, queryError);
+                           
+                           });
+        }
+        
+        function querySuccess(tx, results) {
+
+            alert(results.rows.length);
+            
+     //       var ServiceOrderArray = new Array();
+
+            msg1 = "";
+            for (i = 0; i < results.rows.length; i++){
+                msg1 = msg1 + results.rows.item(i).OBJECT_ID + "     " + results.rows.item(i).NAME_ORG1 + "\n";
+//                ServiceOrderArray[i] = new Array(results.rows.item(i).PRIORITY,results.rows.item(i).STATUS,results.rows.item(i).ZZKEYDATE,results.rows.item(i).ZZKEYTIME,results.rows.item(i).NAME_ORG1,results.rows.item(i).NAME_ORG2,results.rows.item(i).ZZETADATE,results.rows.item(i).ZZETATIME,results.rows.item(i).OBJECT_ID,results.rows.item(i).CP1_NAME1_TEXT,results.rows.item(i).DESCRIPTION);
+                ServiceOrderArray[i] = new Array(results.rows.item(i).PRIORITY,
+                                                 results.rows.item(i).STATUS,
+                                                 results.rows.item(i).ZZKEYDATE + "\n" + results.rows.item(i).ZZKEYTIME,
+                                                 results.rows.item(i).NAME_ORG1 + "\n" + results.rows.item(i).NAME_ORG2,
+                                                 results.rows.item(i).ZZETADATE,
+                                                 results.rows.item(i).OBJECT_ID,
+                                                 results.rows.item(i).CP1_NAME1_TEXT,
+                                                 results.rows.item(i).DESCRIPTION);
+
+            }
+            alert(msg1);
+           
+        }
+        
+        function queryError(tx, results) {
+            alert("Query error");
+        }
+        
+        function addTable() {
+            
+            var myTableDiv = document.getElementById("metric_results")
+            var table = document.createElement('TABLE')
+            var tableBody = document.createElement('TBODY')
+            
+            table.border = '1'
+            table.appendChild(tableBody);
+            
+            var heading = new Array();
+            heading[0] = "Priority"
+            heading[1] = "Status"
+            heading[2] = "Start Date"
+            heading[3] = "Customer Location"
+            heading[4] = "Est. Arrival"
+            heading[5] = "Service Doc."
+            heading[6] = "Contact Name"
+            heading[7] = "Description"
+            
+    /*        var stock = new Array()
+            stock[0] = new Array("Cars", "88.625", "85.50", "85.81", "987")
+            stock[1] = new Array("Veggies", "88.625", "85.50", "85.81", "988")
+            stock[2] = new Array("Colors", "88.625", "85.50", "85.81", "989")
+            stock[3] = new Array("Numbers", "88.625", "85.50", "85.81", "990")
+            stock[4] = new Array("Requests", "88.625", "85.50", "85.81", "991")
+    */
+            //TABLE COLUMNS
+            var tr = document.createElement('TR');
+            tableBody.appendChild(tr);
+            for (i = 0; i < heading.length; i++) {
+                var th = document.createElement('TH')
+                th.width = '75';
+                th.appendChild(document.createTextNode(heading[i]));
+                tr.appendChild(th);
+                
+            }
+            
+            //TABLE ROWS
+            /*         var tr = document.createElement('TR');
+             tableBody.appendChild(tr);
+             
+             for (i = 0; i < stock.length; i++) {
+             for (j = 0; j < stock[i].length; j++) {
+             var td = document.createElement('TD')
+             td.appendChild(document.createTextNode(stock[i][j]));
+             td.appendChild(td)
+             }
+             }
+             */
+            
+            for (i = 0; i < ServiceOrderArray.length; i++) {
+                var tr = document.createElement('TR');
+                for (j = 0; j < ServiceOrderArray[i].length; j++) {
+                    var td = document.createElement('TD')
+                    td.appendChild(document.createTextNode(ServiceOrderArray[i][j]));
+                    tr.appendChild(td)
+                }
+                tableBody.appendChild(tr);
+            }
+            
+            
+            myTableDiv.appendChild(table)
+            
+        }
+        
+            </script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </head>
+    <body>
+        
+        <br/><br/>
+        <a href="index.html">Back</a>
+        <br/><br/>
+        
+        <button id="callWebservice">Call webservice</button>
+        <!--        <button id="checkDb">Check Database</button>-->
+        <div id="metric_results">
+            <input type="button" id="create" value="Click here" onclick="Javascript:addTable()">
+                </div>
+
+        
+    </body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+<!--        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" href="css/framework7.ios.css">
+        <title>Dashboard</title>
+    </head>
+    <body>
+<!--        <div class="app">-->
+<!--            <h1>Apache Cordova</h1>-->
+<!--            <div id="deviceready" class="blink">-->
+<!--                <p class="event listening">Connecting to Device</p>-->
+<!--                <p class="event received">Device is Ready</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        
+<!--        <div class="pages navbar-through">-->
+            <div data-page="grid" class="page">
+                <div class="page-content" style="color: #800080">
+                    <div class="content-block">
+                    </div>
+                    <div class="ks-grid">
+<!--                        <div class="content-block-title">Columns with gutter</div>-->
+                        <div class="content-block">
+                            <div class="row">
+                                <div class="col-66 height900">
+                                    <div>
+                                        <div class="row-33 height233">
+                                            <div class="row">
+                                                <div class="col-15" style="margin-top:35px;">
+                                                    <img style="width:60px;height:60px;" src="img/NextCustomer.png" />
+                                                    <p>Next Customer</p>
+                                                </div>
+                                                <div class="col-85" style="margin-top:35px;">
+                                                    <div class="row" style="font-size:20px;">
+                                                        Polar Pharma
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-40">
+                                                            <div align="left">1620 Cambridge Ln</div>
+                                                            <div align="left">Harward, US</div>
+                                                            <div align="left">07886</div>
+                                                        </div>
+                                                        <div class="col-60">
+                                                            <div class="row">
+                                                                <div class="col-40">
+                                                                    <div align="left">Kris Gaudy</div>
+                                                                </div>
+                                                                <div class="col-50">
+                                                                    <div align="left">+117182348675</div>
+                                                                </div>
+                                                                <div class="col-10">
+                                                                    <img style="width:15px;height:15px;" src="img/CallButton.png" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-40">
+                                                                </div>
+                                                                <div class="col-50">
+                                                                    <div align="left">+115081237645</div>
+                                                                </div>
+                                                                <div class="col-10">
+                                                                    <img style="width:15px;height:15px;" src="img/CallButton.png" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row" style="border: 1px solid #ddd;">
+                                        </div>
+                                        
+                                        <div class="row-33 height233">
+                                            <div class="row">
+<!--                                                <div class="col-5" style="border: 1px solid #ddd;"></div>-->
+                                                <div class="col-50" style="margin-top:10px;margin-bottom:10px;">
+                                                    <p align="left" style="font-size:15px;">Total Tasks</p>
+                                                    <div class="row" style="margin-top:35px;">
+                                                        <div class="col-30">                                                    <img style="width:60px;height:60px;" src="img/TotalTasks.png" />
+                                                        </div>
+                                                        <div class="col-70" style="font-size:80px;">8
+                                                        </div>
+                                                    </div>
+                                                </div>
+<!--                                                <div class="col-10" style="border: 1px solid #ddd;"></div>-->
+                                                <div class="col-50" style="margin-top:10px;margin-bottom:10px;">
+                                                    <p align="left" style="font-size:15px;">Tasks for the day</p>
+                                                    <div class="row" style="margin-top:35px;">
+                                                        <div class="col-30">                                                    <img style="width:60px;height:60px;" src="img/TasksForTheDay.png" />
+                                                        </div>
+                                                        <div class="col-70" style="font-size:80px;">4
+                                                        </div>
+                                                    </div>
+                                                </div>
+<!--                                                <div class="col-5" style="border: 1px solid #ddd;"></div>-->
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-50">
+                                                <div class="row" style="border: 1px solid #ddd;"></div>
+                                            </div>
+                                            <div class="col-50">
+                                                <div class="row" style="border: 1px solid #ddd;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row-33 height233">
+                                            <div class="row">
+                                                <div class="col-20" style="margin-top:20px;">
+                                                    <img style="width:80px;height:80px;" src="img/VanStock.png" />
+                                                    <p>Van Stock</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:20px;">
+                                                    <img style="width:80px;height:80px;" src="img/Utilization.png" />
+                                                    <p>Utilization</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:20px;">
+                                                    <img style="width:80px;height:80px;" src="img/Contacts.png" />
+                                                    <p>Contacts</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:20px;">
+                                                    <img style="width:80px;height:80px;" src="img/Billable.png" />
+                                                    <p>Billable</p>
+                                                </div>
+                                                <div class="col-20" style="margin-top:20px;">
+                                                    <img style="width:80px;height:80px;" src="img/Activities.png" />
+                                                    <p>Activities</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-33 height900"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--        </div>-->
+
+
+        <script type="text/javascript" src="js/framework7.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>
